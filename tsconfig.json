@@ -1,12 +1,15 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "target": "es5", 
+    "skipLibCheck": true,
+    "declaration": true,
+    "target": "es6",
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true
   },
+  "exclude": ["node_modules", "*.d.ts", "@types"],
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Recommended"
 }

@@ -3,22 +3,20 @@ import { Request, Response, NextFunction } from "express";
 import * as emoji from "node-emoji";
 import emojiList from "./emoji";
 
-const createData = async (req: Request, res: Response, next: NextFunction) => {
+const createData = async (req: Request, res: Response) => {
   const { id: dataID } = req.body;
   const dataDb = await datas.findOne({ id: dataID }, { _id: 0, __v: 0 });
   if (dataDb) {
-    res
-      .status(200)
-      .json({
-        msg: `data by id ${dataID} already avaliable`,
-        data: `${dataDb}`,
-      });
+    res.status(200).json({
+      msg: `data by id ${dataID} already avaliable`,
+      data: `${dataDb}`,
+    });
   } else {
     const toDB: object = await datas.create(req.body);
     res.status(200).json({ msg: `data successfully written`, data: `${toDB}` });
   }
 };
-const writeDummy = async (req: Request, res: Response, next: NextFunction) => {
+const writeDummy = async (req: Request, res: Response) => {
   const time = new Date();
   const { id: dataID, request: requestVal } = req.body;
   const dataDb = await datas.findOne({ id: dataID });
@@ -63,36 +61,36 @@ const writeDummy = async (req: Request, res: Response, next: NextFunction) => {
     res.status(404).json({ msg: `data by the id:${dataID} not found` });
   }
 };
-const getId = async (req: Request, res: Response, next: NextFunction) => {
-  const { id: dataID } = req.params
-  const dataDb = await datas.findOne({ id: dataID })
+const getId = async (req: Request, res: Response) => {
+  const { id: dataID } = req.params;
+  const dataDb = await datas.findOne({ id: dataID });
   if (dataDb) {
     res.status(200).json({
       msg: `data u were looking for is found`,
-    data:`${dataDb}`})
+      data: `${dataDb}`,
+    });
   } else {
     res.status(404).json({
       msg: `data u were looking for by the id : ${dataID} is not found`,
-    })
+    });
   }
-
-}
-const delId = async (req: Request, res: Response, next: NextFunction) => {
-  const { id: dataID } = req.params
-  const dataDb = await datas.findOneAndDelete({ id: dataID })
+};
+const delId = async (req: Request, res: Response) => {
+  const { id: dataID } = req.params;
+  const dataDb = await datas.findOneAndDelete({ id: dataID });
   if (dataDb) {
     res.status(200).json({
       msg: `data u were looking for is found and deleted`,
-    data:`${dataDb}`})
+      data: `${dataDb}`,
+    });
   } else {
     res.status(404).json({
       msg: `data u were looking for by the id : ${dataID} is not found then nothing to delete`,
-    })
+    });
   }
+};
 
-}
-
-export { createData, writeDummy,getId,delId };
+export { createData, writeDummy, getId, delId };
 function getRegEx(item: string) {
   let pattern = new RegExp(item, "g");
   return pattern;
