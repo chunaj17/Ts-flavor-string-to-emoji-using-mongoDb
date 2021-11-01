@@ -1,7 +1,7 @@
 type keyValue = {
-[key:string]:string
-}
-const emoji:keyValue = {
+  [key: string]: string;
+};
+const emoji: keyValue = {
   a: "smile",
   b: "disappointed",
   c: "worried",
@@ -30,4 +30,4 @@ const emoji:keyValue = {
   z: "grin",
 };
 
-export = emoji;
+export { emoji };

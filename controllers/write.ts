@@ -1,7 +1,7 @@
 import datas from "../models/modelEmoji";
 import { Request, Response, NextFunction } from "express";
 import * as emoji from "node-emoji";
-import emojiList from "./emoji";
+import { emoji as emojiList } from "./emoji";
 
 const createData = async (req: Request, res: Response) => {
   const { id: dataID } = req.body;
