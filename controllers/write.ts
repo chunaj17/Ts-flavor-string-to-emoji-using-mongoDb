@@ -1,8 +1,8 @@
 import datas from "../models/modelEmoji";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import * as emoji from "node-emoji";
 import { emoji as emojiList } from "./emoji";
-
+import { getRegEx } from "../utilites/getRegEx";
 const createData = async (req: Request, res: Response) => {
   const { id: dataID } = req.body;
   const dataDb = await datas.findOne({ id: dataID }, { _id: 0, __v: 0 });
@@ -91,7 +91,3 @@ const delId = async (req: Request, res: Response) => {
 };
 
 export { createData, writeDummy, getId, delId };
-function getRegEx(item: string) {
-  let pattern = new RegExp(item, "g");
-  return pattern;
-}

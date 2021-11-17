@@ -7,10 +7,6 @@ interface arrInterface {
 type keyValue = {
   [key: string]: number;
 };
-interface shareInterface extends Request {
-  data: keyValue;
-  sorter: arrInterface[];
-}
 type user = {
   [key: string]: ValidationChain[];
 };
