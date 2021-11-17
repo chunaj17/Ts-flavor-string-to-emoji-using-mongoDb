@@ -2,28 +2,28 @@ import { Request, Response, NextFunction } from "express";
 import {
   body,
   param,
-  ValidationChain,
   validationResult,
+  CustomValidator,
 } from "express-validator";
-type user = {
-  [key: string]: ValidationChain[];
-};
+import { user } from "../interfaces/interface";
+import {
+  noDuplication,
+  noSymbols,
+  atLeast,
+} from "../utilites/customValidatorFun";
 const validationRule = (method: string) => {
   let hello: user = {
     createId: [body("id").isAlphanumeric(), body("character").isAlpha()],
     requestId: [body("id").isAlphanumeric(), body("request").isString()],
+    stringValidate: [
+      body("value")
+        // .custom(noSpace)
+        .custom(noSymbols)
+        .custom(atLeast)
+        .custom(noDuplication),
+    ],
     Id: [param("id").isAlphanumeric()],
   };
   return hello[method];
 };
-const validateReq = (req: Request, res: Response, next: NextFunction) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res.status(422).json({
-      msg: "invalid entry checkout ur entry on req-body or req-param",
-      error: error.array(),
-    });
-  }
-  next();
-};
-export { validationRule, validateReq };
+export { validationRule };
