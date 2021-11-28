@@ -1,13 +1,20 @@
-import { Request } from "express";
-import { ValidationChain } from "express-validator";
+import { Request } from 'express'
+import { ValidationChain } from 'express-validator'
 interface arrInterface {
-  key: string;
-  value: number;
+  key: string
+  value: number
 }
 type keyValue = {
-  [key: string]: number;
-};
+  [key: string]: number
+}
 type user = {
-  [key: string]: ValidationChain[];
-};
-export { arrInterface, keyValue, user };
+  [key: string]: ValidationChain[]
+}
+interface dbInterface {
+  _id: any
+  id: string
+  character: string
+  __v: number
+  requests: object
+}
+export { arrInterface, keyValue, user, dbInterface }

@@ -1,29 +1,27 @@
-import { Request, Response, NextFunction } from "express";
-import {
-  body,
-  param,
-  validationResult,
-  CustomValidator,
-} from "express-validator";
-import { user } from "../interfaces/interface";
+import { body, param } from 'express-validator'
+import { user } from '../interfaces/interface'
 import {
   noDuplication,
   noSymbols,
   atLeast,
-} from "../utilites/customValidatorFun";
+  idMatched,
+  findId,
+} from '../utilites/customValidatorFun'
 const validationRule = (method: string) => {
   let hello: user = {
-    createId: [body("id").isAlphanumeric(), body("character").isAlpha()],
-    requestId: [body("id").isAlphanumeric(), body("request").isString()],
-    stringValidate: [
-      body("value")
-        // .custom(noSpace)
-        .custom(noSymbols)
-        .custom(atLeast)
-        .custom(noDuplication),
+    createId: [
+      body('id').isAlphanumeric().custom(idMatched),
+      body('character').isAlpha(),
     ],
-    Id: [param("id").isAlphanumeric()],
-  };
-  return hello[method];
-};
-export { validationRule };
+    requestId: [
+      body('id').isAlphanumeric().custom(findId),
+      body('request').isString(),
+    ],
+    stringValidate: [
+      body('value').custom(noSymbols).custom(atLeast).custom(noDuplication),
+    ],
+    Id: [param('id').isAlphanumeric().custom(findId)],
+  }
+  return hello[method]
+}
+export { validationRule }
