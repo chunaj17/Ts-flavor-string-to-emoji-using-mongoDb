@@ -14,6 +14,6 @@ router
   .delete(validationRule("Id"), validateReq, delId);
 router
   .route("/convertString")
-  .get(validationRule("stringValidate"), validateReq, stringToEmoji);
+  .post(validationRule("stringValidate"), validateReq, stringToEmoji);
 
 export = router;
